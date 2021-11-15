@@ -37,7 +37,17 @@ class PizzaController extends Controller
      */
     public function store(PizzaRequest $request)
     {
-        return $request->all();
+        $path = $request->image->store('public/pizza');
+        Pizza::create([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'small_pizza_price' => $request->get('small_pizza_price'),
+            'medium_pizza_price' => $request->get('medium_pizza_price'),
+            'large_pizza_price' => $request->get('large_pizza_price'),
+            'category' => $request->get('category'),
+            'image' => $path,
+        ]);
+        return redirect()->back()->with('success', "Pizza created Successfully!");
     }
 
     /**

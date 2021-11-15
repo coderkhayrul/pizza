@@ -19,6 +19,12 @@
             <div class="card">
                 <div class="card-header">Pizza</div>
                 <div class="card-body">
+                    @if (Session::has('success'))
+                        <div class="alert alert-success">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+
                     <form action="{{ route('pizza.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
