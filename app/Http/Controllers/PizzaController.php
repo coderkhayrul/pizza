@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PizzaRequest;
+use App\Models\Pizza;
 use Illuminate\Http\Request;
 
 class PizzaController extends Controller
@@ -13,7 +15,8 @@ class PizzaController extends Controller
      */
     public function index()
     {
-        return view('backend.index');
+        $pizzas = Pizza::orderBy('id', 'asc')->get();
+        return view('backend.index', compact('pizzas'));
     }
 
     /**
@@ -23,7 +26,7 @@ class PizzaController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.create');
     }
 
     /**
@@ -32,9 +35,9 @@ class PizzaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PizzaRequest $request)
     {
-        //
+        return $request->all();
     }
 
     /**
