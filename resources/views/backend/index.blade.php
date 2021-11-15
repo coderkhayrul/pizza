@@ -16,6 +16,11 @@
             </div>
         </div>
         <div class="col-md-10">
+            @if (Session::has('success'))
+                <div class="alert alert-success">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">Pizza List</div>
                 <div class="card-body">
@@ -45,12 +50,17 @@
                             <td>{{ $pizza->medium_pizza_price }}</td>
                             <td>{{ $pizza->large_pizza_price }}</td>
                             <td>
-                                <a href="" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{ route('pizza.edit',$pizza->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ route('pizza.destroy',$pizza->id) }}" class="btn btn-danger btn-sm" onclick="event.preventDefault(); document.getElementById('pizza-delete').submit();">Delete</a>
+                                <form id="pizza-delete" action="{{ route('pizza.destroy',$pizza->id) }}" method="POST" class="d-none">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+
                             </td>
                         </tr>
                         @empty
-
+                        <h3>There are no data available!</h3>
                         @endforelse
 
                     </tbody>

@@ -17,7 +17,10 @@
         </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create Pizza</div>
+                <div class="card-header">
+                    Update Pizza
+                    <a href="{{ route('pizza.index') }}" class="btn btn-primary btn-sm float-right">Back</a>
+                </div>
                 <div class="card-body">
                     @if (Session::has('success'))
                         <div class="alert alert-success">
@@ -25,11 +28,12 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('pizza.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('pizza.update',$pizza->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="name">Name Of Pizza</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Your Pizza Name" value="{{ old('name') }}">
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Your Pizza Name" value="{{ $pizza->name }}">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -38,7 +42,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description Of Pizza</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" value="{{ old('description') }}"></textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30" value="{{ old('description') }}">{{ $pizza->description }}</textarea>
                             @error('description')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -47,17 +51,17 @@
                         </div>
                         <label for="price">Pizza Price($)</label>
                         <div class="form-inline">
-                            <input name="small_pizza_price" type="number" class="form-control @error('small_pizza_price') is-invalid @enderror" id="" placeholder="Small Pizza Price" value="{{ old('small_pizza_price') }}">
-                            <input name="medium_pizza_price" type="number" class="form-control m-1 @error('medium_pizza_price') is-invalid @enderror" id="" placeholder="Medium Pizza Price" value="{{ old('medium_pizza_price') }}">
-                            <input name="large_pizza_price" type="number" class="form-control @error('large_pizza_price') is-invalid @enderror" id="" placeholder="Large Pizza Price" value="{{ old('large_pizza_price') }}">
+                            <input name="small_pizza_price" type="number" class="form-control @error('small_pizza_price') is-invalid @enderror" id="" placeholder="Small Pizza Price" value="{{ $pizza->small_pizza_price }}">
+                            <input name="medium_pizza_price" type="number" class="form-control m-1 @error('medium_pizza_price') is-invalid @enderror" id="" placeholder="Medium Pizza Price" value="{{ $pizza->medium_pizza_price }}">
+                            <input name="large_pizza_price" type="number" class="form-control @error('large_pizza_price') is-invalid @enderror" id="" placeholder="Large Pizza Price" value="{{ $pizza->large_pizza_price }}">
                         </div>
                         <div class="form-group">
                             <label for="category">Category Of Pizza</label>
-                            <select class="form-control @error('category') is-invalid @enderror" name="category" id="" value="{{ old('category') }}">
+                            <select class="form-control @error('category') is-invalid @enderror" name="category" id="">
                                 <option value="" disabled>Select Your Category</option>
-                                <option value="vegetarian">Vegetarian Pizza</option>
-                                <option value="nonvegetarian">Non Vegetarian Pizza</option>
-                                <option value="traditional">Traditional Pizza</option>
+                                <option value="vegetarian" {{ $pizza->category == 'vegetarian' ? 'selected' : '' }}>Vegetarian Pizza</option>
+                                <option value="nonvegetarian" {{ $pizza->category == 'nonvegetarian' ? 'selected' : '' }}>Non Vegetarian Pizza</option>
+                                <option value="traditional" {{ $pizza->category == 'traditional' ? 'selected' : '' }}>Traditional Pizza</option>
                             </select>
                             @error('category')
                                 <span class="invalid-feedback" role="alert">
@@ -68,6 +72,7 @@
                         <div class="form-group">
                             <label for="image">Image Of Pizza</label>
                             <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
+                            <img src="{{ Storage::url($pizza->image) }}" alt="pizza Image" width="150px">
                             @error('image')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -75,7 +80,7 @@
                             @enderror
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
                 </div>
