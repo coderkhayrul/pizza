@@ -17,7 +17,10 @@
         </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create Pizza</div>
+                <div class="card-header">
+                    Create Pizza
+                    <a href="{{ route('pizza.index') }}" class="btn btn-primary btn-sm float-right">Back</a>
+                </div>
                 <div class="card-body">
                     @if (Session::has('success'))
                         <div class="alert alert-success">

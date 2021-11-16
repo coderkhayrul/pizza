@@ -11,6 +11,7 @@
                     <ul class="list-group">
                         <a href="{{ route('pizza.index') }}" class="list-group-item list-group-item-action">View</a>
                         <a href="{{ route('pizza.create') }}" class="list-group-item list-group-item-action">Create</a>
+                        <a href="{{ route('user.order') }}" class="list-group-item list-group-item-action">User Order</a>
                     </ul>
                 </div>
             </div>
@@ -22,7 +23,10 @@
                 </div>
             @endif
             <div class="card">
-                <div class="card-header">Pizza List</div>
+                <div class="card-header">
+                    Pizza List
+                    <a href="{{ route('pizza.create') }}" class="btn btn-primary btn-sm float-right">Add Pizza</a>
+                </div>
                 <div class="card-body">
                     <table class="table table-striped">
                     <thead>
@@ -46,9 +50,9 @@
                             <td>{{ $pizza->name }}</td>
                             <td>{{ $pizza->description }}</td>
                             <td>{{ $pizza->category }}</td>
-                            <td>{{ $pizza->small_pizza_price }}</td>
-                            <td>{{ $pizza->medium_pizza_price }}</td>
-                            <td>{{ $pizza->large_pizza_price }}</td>
+                            <td>{{ $pizza->small_pizza_price }}$</td>
+                            <td>{{ $pizza->medium_pizza_price }}$</td>
+                            <td>{{ $pizza->large_pizza_price }}$</td>
                             <td>
                                 <a href="{{ route('pizza.edit',$pizza->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 <a href="{{ route('pizza.destroy',$pizza->id) }}" class="btn btn-danger btn-sm" onclick="event.preventDefault(); document.getElementById('pizza-delete').submit();">Delete</a>
@@ -65,6 +69,7 @@
 
                     </tbody>
                     </table>
+                    {{ $pizzas->links() }}
                 </div>
             </div>
         </div>

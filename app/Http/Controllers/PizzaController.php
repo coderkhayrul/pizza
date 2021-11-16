@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class PizzaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,7 @@ class PizzaController extends Controller
      */
     public function index()
     {
-        $pizzas = Pizza::orderBy('id', 'asc')->get();
+        $pizzas = Pizza::paginate(5);
         return view('backend.index', compact('pizzas'));
     }
 
